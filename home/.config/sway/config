@@ -171,7 +171,7 @@ for_window [app_id="pamac-manager"] floating enable
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec blueman-applet
 exec mako
-exec waybar
+exec waybar -c /etc/swayos/waybar -s /etc/swayos/style.css
 exec swayidle -w \
          timeout 1200 'swaylock -f' \
          timeout 2400 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
