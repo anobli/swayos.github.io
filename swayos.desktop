@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=SwayOS
+Comment=An i3-compatible Wayland compositor
+Exec=sway -c /etc/swayos/config
+Type=Application
