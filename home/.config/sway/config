@@ -20,10 +20,20 @@ set $browser chromium
 set $terminal foot
 set $screenshot grim ~/Downloads/scrn-$(date +"%Y-%m-%d-%H-%M-%S").png
 set $screenclip slurp | grim -g - ~/Downloads/scrn-$(date +"%Y-%m-%d-%H-%M-%S").png
-
-# shortcuts
+set $notifier mako
+set $polkit_agent /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+set $swayidle swayidle -w \
+         timeout 300 'swaylock -f' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f'
 
 set $mod Mod4
+
+# Load user defined constant
+
+include $HOME/.config/swayos/const
+
+# shortcuts
 
 bindsym $mod+Up focus up
 bindsym $mod+Down focus down
@@ -168,14 +178,11 @@ for_window [app_id="pamac-manager"] floating enable
 
 # auto launch applications
 
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec blueman-applet
-exec mako
 exec /bin/bash /etc/swayos/waybar.sh
-exec swayidle -w \
-         timeout 1200 'swaylock -f' \
-         timeout 2400 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f'
+exec $polkit_agent
+exec $notifier
+exec $swayidle
 
 exec rm -f /tmp/wob && mkfifo /tmp/wob && tail -f /tmp/wob | wob
 exec rm -f /tmp/sov && mkfifo /tmp/sov && tail -f /tmp/sov | sov -t 200
